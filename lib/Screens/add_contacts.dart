@@ -123,33 +123,3 @@ class _AddContactsState extends State<AddContacts> {
     );
   }
 }
-
-class ShowContacts extends StatelessWidget {
-  List<Contacts> contacts;
-
-  ShowContacts({required this.contacts});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('My Contacts'),
-      ),
-      body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(contacts[index].fname + ' ' + contacts[index].lname),
-            subtitle: Text(
-              contacts[index].pnums[0] +
-                  '   ' +
-                  contacts[index].pnums[1] +
-                  '   ' +
-                  contacts[index].pnums[2],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}

@@ -23,8 +23,7 @@ class _GetDataState extends State<GetData> {
     setState(() {
       users = jsonDecode(result.body);
     });
-    print(
-        "Status Code [" + result.statusCode.toString() + "]: All Data Fetched");
+    print("All Data Fetched");
   }
 
 
