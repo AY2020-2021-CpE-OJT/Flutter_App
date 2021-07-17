@@ -28,13 +28,10 @@ class CheckScreen extends StatelessWidget {
       );
     }
 
-    //User INTERFACE
 
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-        ),
+    //CONFIRMATION SCREEN
+
+    return Scaffold(
         body: Padding(
           padding: EdgeInsets.all(20.0),
           child: ListView.builder(
@@ -92,7 +89,6 @@ class CheckScreen extends StatelessWidget {
             },
           ),
         ),
-      ),
     );
   }
 }

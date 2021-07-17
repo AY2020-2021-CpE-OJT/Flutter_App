@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'CheckScreen.dart';
 
 class Contacts {
@@ -11,6 +10,8 @@ class Contacts {
   Contacts(this.fname, this.lname, this.pnums);
 }
 
+
+// USER INTERFACE FOR ADDING CONTACTS
 class AddContacts extends StatefulWidget {
   @override
   _AddContactsState createState() => _AddContactsState();

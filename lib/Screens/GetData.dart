@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:test_project/Screens/modify.dart';
 import 'add_contacts.dart';
+import 'dart:async';
 
 class GetData extends StatefulWidget {
 
@@ -26,19 +26,24 @@ class _GetDataState extends State<GetData> {
     print("All Data Fetched");
   }
 
-
   String _name(dynamic user) {
     return user['firstname'] + " " + user['lastname'];
+  }
+
+  String _id (dynamic user){
+    return user["_id"];
   }
 
   String _phonenum(dynamic user) {
     return "First Number: " + user['phonenumbers'][0] + "\n" + "Second Number: " + user['phonenumbers'][1] + "\n"
         + "Third Number: " + user['phonenumbers'][2];
   }
+
   @override
   void initState() {
     super.initState();
     fetchContacts();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -55,8 +60,6 @@ class _GetDataState extends State<GetData> {
               MaterialPageRoute(
                   builder: (context) => AddContacts()));
         },
-
-
       ),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
@@ -78,12 +81,18 @@ class _GetDataState extends State<GetData> {
                           ),
                         ),
                         subtitle: Text(_phonenum(users[index])),
-                        onLongPress: () {
+                      ),
+                      ElevatedButton(
+                        child: Text('Delete'),
+                        onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Modify(contactID: '',)));
-                        }
+                                  builder: (context) => GetData()));
+                          setState(() {
+                               deleteAlbum(_id(users[index]));
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -93,6 +102,53 @@ class _GetDataState extends State<GetData> {
           },
         ),
       ),
+    );
+  }
+}
+
+
+
+// FOR DELETE
+
+Future<Album> fetchAlbum() async {
+  final response = await http.get(
+    Uri.parse('https://pbook-application.herokuapp.com/posts'),
+  );
+
+  if (response.statusCode == 200) {
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
+Future<Album> deleteAlbum(String id) async {
+  final http.Response response = await http.delete(
+    Uri.parse('https://pbook-application.herokuapp.com/posts/delete/$id'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode == 200) {
+
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to delete album.');
+  }
+}
+
+class Album {
+  final String fname;
+  final String lname;
+  final List<String> pnums;
+  final String id;
+
+  Album({required this.pnums,required this.fname, required this.lname, required this.id});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(fname: 'firstname', lname: 'lastname', pnums: [ ], id: '_id'
+
     );
   }
 }
