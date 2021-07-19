@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'GetData.dart';
@@ -18,6 +19,7 @@ class CheckScreen extends StatelessWidget {
       return http.post(
         Uri.parse('https://pbook-application.herokuapp.com/posts/create'),
         headers: <String, String>{
+        HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxODIwMzQyLCJ1c2VybmFtZSI6ImpyYXBoIiwiZW1haWwiOiJqb2huQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MjY2ODI0NjN9.jjjmQhe8JQjvs7XPCA8phcVLnIDSPKi4sM7XBJpx7tM',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({

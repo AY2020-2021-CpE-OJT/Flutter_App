@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'add_contacts.dart';
 import 'dart:async';
+import 'dart:io';
 
 class GetData extends StatefulWidget {
 
@@ -19,7 +20,11 @@ class _GetDataState extends State<GetData> {
 
 //get
   void fetchContacts() async {
-    var result = await http.get(Uri.parse(apiUrlget));
+    var result = await http.get(Uri.parse(apiUrlget),
+      headers: {
+      HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxODIwMzQyLCJ1c2VybmFtZSI6ImpyYXBoIiwiZW1haWwiOiJqb2huQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MjY2ODI0NjN9.jjjmQhe8JQjvs7XPCA8phcVLnIDSPKi4sM7XBJpx7tM',
+    },);
+
     setState(() {
       users = jsonDecode(result.body);
     });
@@ -113,6 +118,9 @@ class _GetDataState extends State<GetData> {
 Future<Album> fetchAlbum() async {
   final response = await http.get(
     Uri.parse('https://pbook-application.herokuapp.com/posts'),
+    headers: {
+      HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxODIwMzQyLCJ1c2VybmFtZSI6ImpyYXBoIiwiZW1haWwiOiJqb2huQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MjY2ODI0NjN9.jjjmQhe8JQjvs7XPCA8phcVLnIDSPKi4sM7XBJpx7tM',
+    },
   );
 
   if (response.statusCode == 200) {
@@ -126,6 +134,7 @@ Future<Album> deleteAlbum(String id) async {
   final http.Response response = await http.delete(
     Uri.parse('https://pbook-application.herokuapp.com/posts/delete/$id'),
     headers: <String, String>{
+    HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxODIwMzQyLCJ1c2VybmFtZSI6ImpyYXBoIiwiZW1haWwiOiJqb2huQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MjY2ODI0NjN9.jjjmQhe8JQjvs7XPCA8phcVLnIDSPKi4sM7XBJpx7tM',
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
